@@ -7,9 +7,9 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo "Formatting code with ruff..."
-uv run ruff format src
+uv run ruff format src tests
 
 echo "Linting code with ruff..."
-uv run ruff check --fix src
+uv run ruff check --fix src tests
 
 echo "All done! Code is formatted and linted."

@@ -1,3 +1,5 @@
+from typing import Annotated
+
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -11,12 +13,20 @@ console = Console()
 
 @app.command()
 def save(
-    bucket: str | None = typer.Argument(
-        None, help="S3 bucket name (if not provided, all accessible buckets will be used)"
-    ),
-    batch_size: int = typer.Option(
-        100, "--batch-size", "-b", help="Number of keys to process in each batch"
-    ),
+    bucket: Annotated[
+        str | None,
+        typer.Argument(
+            help="S3 bucket name (if not provided, all accessible buckets will be used)"
+        ),
+    ] = None,
+    batch_size: Annotated[
+        int,
+        typer.Option(
+            "--batch-size",
+            "-b",
+            help="Number of keys to process in each batch",
+        ),
+    ] = 100,
 ):
     """Save all S3 keys to SQLite database"""
     console.print("[bold]Saving S3 keys to SQLite database...[/bold]")
@@ -56,7 +66,7 @@ def save(
 
 
 @app.command()
-def search(query: str = typer.Argument(..., help="Text to search for in S3 keys")):
+def search(query: Annotated[str, typer.Argument(..., help="Text to search for in S3 keys")]):
     """Search for S3 keys in the SQLite database"""
     console.print(f"[bold]Searching for keys containing: [cyan]{query}[/cyan][/bold]")
 

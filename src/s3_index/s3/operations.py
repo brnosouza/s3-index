@@ -1,4 +1,4 @@
-from typing import Generator
+from collections.abc import Generator
 
 import boto3
 from rich.console import Console

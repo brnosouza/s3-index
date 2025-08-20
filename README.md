@@ -4,12 +4,12 @@ A CLI tool to save S3 keys to a SQLite database and search them efficiently. Bui
 
 ## Installation
 
-Clone the repository and install using pip:
+Clone the repository and install using uv:
 
 ```bash
 git clone <repository_url>
 cd s3-index
-pip install -e .
+uv pip install -e .
 ```
 
 ## Usage
@@ -75,14 +75,20 @@ s3-index/
 ### Setting up a Development Environment
 
 1. Clone the repository
-2. Create a virtual environment:
+2. Create a virtual environment with uv:
    ```bash
-   python -m venv .venv
+   uv venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 3. Install development dependencies:
    ```bash
-   pip install -e .
+   uv pip install -e ".[dev]"
+   uv sync
+   ```
+
+4. Run the tests to verify your setup:
+   ```bash
+   uv run pytest
    ```
 
 ### Code Quality
@@ -102,8 +108,47 @@ uv run ruff check src
 
 ### Running Tests
 
+The project uses pytest for automated testing. Run the tests with:
+
 ```bash
-pytest
+# Run all tests with the provided script
+./scripts/test.sh
+
+# Or run specific tests manually:
+# Run all tests
+uv run pytest
+
+# Run only unit tests
+uv run pytest tests/unit
+
+# Run only integration tests
+uv run pytest tests/integration
+
+# Run with coverage report
+uv run pytest --cov=s3_index
+```
+
+The test suite includes:
+
+- **Unit tests**: Test individual functions in isolation
+- **Integration tests**: Test the complete workflow with mocked S3
+- **CLI tests**: Test the command-line interface functionality
+
+The test script `scripts/test.sh` runs linting, formatting checks, unit tests, integration tests, and generates a coverage report.
+
+
+
+### Adding Dependencies
+
+```bash
+# Add a runtime dependency
+uv add package_name
+
+# Add a development dependency
+uv add --dev package_name
+
+# Update dependencies
+uv sync
 ```
 
 ### Advanced Usage
@@ -131,7 +176,9 @@ Benefits of batch processing:
 ## Requirements
 
 - Python 3.13+
+- uv package manager (for dependency management)
 - AWS credentials configured (via environment variables, AWS profile, or IAM role)
+- pytest and moto (for running tests)
 
 ## License
 

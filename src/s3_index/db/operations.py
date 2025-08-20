@@ -82,7 +82,7 @@ def save_keys_to_db(keys: list[dict[str, object]]) -> tuple[int, int]:
         tuple[int, int]: (Number of keys successfully saved, Number of keys skipped)
     """
     if not keys:
-        return (0, 0)
+        return 0, 0
 
     db_path = setup_database()
     conn = sqlite3.connect(db_path)
@@ -146,7 +146,7 @@ def save_keys_to_db(keys: list[dict[str, object]]) -> tuple[int, int]:
     finally:
         conn.close()
 
-    return (count, skipped)
+    return count, skipped
 
 
 def search_keys(query: str) -> list[tuple[str, str, str]]:
